@@ -154,10 +154,10 @@ function CalendarControl() {
       return new Date(year, month, 0).getDate();
     },
     firstDay: function() {
-      return new Date(calendar.getFullYear(), calendar.getMonth(), 1);
+      return new Date(calendar.getFullYear(), calendar.getFullMonth(), 1);
     },
     lastDay: function() {
-      return new Date(calendar.getFullYear(), calendar.getMonth() + 1, 0);
+      return new Date(calendar.getFullYear(), calendar.getFullMonth() + 1, 0);
     },
     firstDayNumber: function() {
       return calendarControl.firstDay().getDay() + 1;
@@ -168,21 +168,21 @@ function CalendarControl() {
     getPreviousMonthLastDate: function() {
       let lastDate = new Date(
         calendar.getFullYear(),
-        calendar.getMonth(),
+        calendar.getFullMonth(),
         0
       ).getDate();
       return lastDate;
     },
     navigateToPreviousMonth: function() {
-      calendar.setMonth(calendar.getMonth() - 1);
+      calendar.setMonth(calendar.getFullMonth() - 1);
       calendarControl.attachEventsOnNextPrev();
     },
     navigateToNextMonth: function() {
-      calendar.setMonth(calendar.getMonth() + 1);
+      calendar.setMonth(calendar.getFullMonth() + 1);
       calendarControl.attachEventsOnNextPrev();
     },
     navigateToCurrentMonth: function() {
-      let currentMonth = calendarControl.localDate.getMonth();
+      let currentMonth = calendarControl.localDate.getFullMonth();
       let currentYear = calendarControl.localDate.getFullYear();
       calendar.setMonth(currentMonth);
       calendar.setYear(currentYear);
@@ -193,15 +193,13 @@ function CalendarControl() {
       yearLabel.innerHTML = calendar.getFullYear();
     },
     displayMonth: function() {
-      let monthLabel = document.querySelector(
-        ".calendar .calendar-month-label"
-      );
-      monthLabel.innerHTML = calendarControl.calMonthName[calendar.getMonth()];
+      let monthLabel = document.querySelector(".calendar .calendar-month-label");
+      monthLabel.innerHTML = calendarControl.calMonthName[calendar.getFullMonth()];
     },
     selectDate: function(e) {
       console.log(
         `${e.target.textContent} ${
-          calendarControl.calMonthName[calendar.getMonth()]
+          calendarControl.calMonthName[calendar.getFullMonth()]
         } ${calendar.getFullYear()}`
       );
     },
@@ -220,7 +218,7 @@ function CalendarControl() {
       <div class="calendar-today-date">Today: 
         ${calendarControl.calWeekDays[calendarControl.localDate.getDay()]}, 
         ${calendarControl.localDate.getDate()}, 
-        ${calendarControl.calMonthName[calendarControl.localDate.getMonth()]} 
+        ${calendarControl.calMonthName[calendarControl.localDate.getFullMonth()]} 
         ${calendarControl.localDate.getFullYear()}
       </div>
       <div class="calendar-body"></div></div>`;
@@ -241,7 +239,7 @@ function CalendarControl() {
       let prevDateCount = 0;
       //let prevMonthLastDate = calendarControl.getPreviousMonthLastDate();
       let calendarDays = calendarControl.daysInMonth(
-        calendar.getMonth() + 1,
+        calendar.getFullMonth() + 1,
         calendar.getFullYear()
       );
 
@@ -253,8 +251,8 @@ function CalendarControl() {
             ".calendar .calendar-body"
           ).innerHTML += `<div class="empty-dates"></div>`;
         } else {
-          let currentMonth = calendarControl.localDate.getMonth() + 1;
-          let changedMonth = calendar.getMonth() + 1;
+          let currentMonth = calendarControl.localDate.getFullMonth() + 1;
+          let changedMonth = calendar.getFullMonth() + 1;
           let currentYear = calendarControl.localDate.getFullYear();
           let changedYear = calendar.getFullYear();
           if (
